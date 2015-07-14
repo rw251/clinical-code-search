@@ -42,3 +42,27 @@ describe('SortCodeList', function(){
     });
 
 });
+
+//Following assumes database is setup
+describe('DB', function() {
+    it('C10EC has 0 direct ancestors', function (donea) {
+        db.getChildren('C10EC', function(rows){
+            assert.equal(0, rows.length);
+            donea();
+        });
+    });
+
+    it('C10F. has 27 direct ancestors', function (doneb) {
+        db.getChildren('C10F.', function(rows){
+            assert.equal(27, rows.length);
+            doneb();
+        });
+    });
+
+    it('C10.. has 26 direct ancestors', function (donec) {
+        db.getChildren('C10..', function(rows){
+            assert.equal(26, rows.length);
+            donec();
+        });
+    });
+});
