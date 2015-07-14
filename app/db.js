@@ -1,9 +1,10 @@
 var sqlite3 = require('sqlite3').verbose();
 var fs = require("fs");
-var file = "./db/read.sqlite";
-var exists = fs.existsSync(file);
 var liner = require('./liner');
-var source = fs.createReadStream('./data/Keyv2.all');
+
+var dataFile = "./data/Keyv2.all";
+var dbFile = "./db/read.sqlite";
+
 var DB = {};
 
 var createTables = function(){
@@ -18,6 +19,9 @@ var createTables = function(){
 
     DB.db.run("DROP TABLE IF EXISTS code_rubric_link");
     DB.db.run("CREATE TABLE code_rubric_link (id INTEGER PRIMARY KEY, codeId INTEGER, rubricId INTEGER)");
+
+    DB.db.run("DROP TABLE IF EXISTS RubricSearch");
+    DB.db.run("CREATE VIRTUAL TABLE RubricSearch USING fts4(code, rubric)");
 };
 
 var insertData = function(done){
@@ -26,6 +30,8 @@ var insertData = function(done){
 
     var stmt = DB.db.prepare("INSERT INTO initial (code, rubric) VALUES (?, ?)");
     var i = 1;
+
+    var source = fs.createReadStream(dataFile);
 
     source.pipe(liner);
     console.log("Loading data:");
@@ -147,8 +153,6 @@ var populateLinkTable = function(done){
 };
 
 var createFullTextSearch = function(done){
-    DB.db.run("CREATE VIRTUAL TABLE RubricSearch USING fts4(code, rubric)");
-
     DB.db.run("INSERT INTO RubricSearch SELECT code, rubric FROM initial", function(err){
         if(err) console.log(err);
         console.log("createFullTextSearch:" + this.lastID);
@@ -158,7 +162,7 @@ var createFullTextSearch = function(done){
 };
 
 DB.init = function(){
-    DB.db = new sqlite3.Database(file);
+    DB.db = new sqlite3.Database(dbFile);
     //var db = new sqlite3.Database(':memory:'); //doesn't increase speed for this volume of data
 
     DB.db.run("PRAGMA synchronous = OFF");
