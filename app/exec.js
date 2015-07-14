@@ -1,6 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var fs = require("fs");
-var file = "../db/read.sqlite";
+var file = "./db/read.sqlite";
 var exists = fs.existsSync(file);
 
 var db = new sqlite3.Database(file);
