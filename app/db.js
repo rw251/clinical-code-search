@@ -186,4 +186,46 @@ DB.init = function(){
     });
 };
 
+var sortCodeList = function(codeList){
+    //Sort
+    var i, last, rtn=[];
+    if(!codeList || codeList.length === 0) return codeList;
+
+    codeList.sort();
+
+    rtn.push(codeList[0]);
+    last = codeList[0].replace(/\.*$/g,''); //Trim trailing '.'s
+    for(i=1; i<codeList.length;i++){
+        if(codeList[i].indexOf(last)!==0){
+            rtn.push(codeList[i]);
+            last = codeList[i].replace(/\.*$/g,''); //Trim trailing '.'s
+        }
+    }
+
+    return rtn;
+};
+
+DB.searchByText = function(searchString) {
+    DB.db = new sqlite3.Database(dbFile);
+
+    /*
+        Matching a phrase MATCH '"match th* phr*"'
+        Matching proximate words NEAR 'near me'
+        Matching boolean MATCH 'thi* and that' Hmm AND not working - something to do with the extended query syntax:
+         http://stackoverflow.com/a/14666515/596639
+     */
+    var query = "SELECT code, rubric FROM RubricSearch WHERE rubric MATCH '" + searchString.replace("'","''").split(' ').join('* ') + "*'";
+    console.log(query);
+    DB.db.each(query, function(err, row){
+        if(err){
+            console.log(err);
+        }
+       console.log(row);
+    });
+};
+
+/* Private functions for testing */
+DB._sortCodeList = sortCodeList;
+/*  */
+
 module.exports = DB;

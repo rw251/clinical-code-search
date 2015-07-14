@@ -1,3 +1,7 @@
 var db = require('./app/db');
 
-db.init();
+//Initialise database from data file
+//db.init();
+
+db.searchByText("bmi");
+//db.searchByText("bmi");
