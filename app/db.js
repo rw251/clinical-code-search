@@ -245,7 +245,7 @@ var searchByText = function(searchString) {
         Matching boolean MATCH 'thi* and that' Hmm AND not working - something to do with the extended query syntax:
          http://stackoverflow.com/a/14666515/596639
      */
-    var query = "SELECT code, rubric FROM RubricSearch WHERE full MATCH '" + searchString.replace("'","''").split(' ').join('* ') + "*'";
+    var query = "SELECT code, full FROM RubricSearch WHERE full MATCH '" + searchString.replace("'","''").split(' ').join('* ') + "*'";
     db.each(query, function(err, row){
         console.log(query);
         if(err){

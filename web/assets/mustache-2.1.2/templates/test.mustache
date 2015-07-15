@@ -1,0 +1,20 @@
+<tr class="suggestion">
+    <td>
+        <span>{{{text}}}</span>
+        {{#improvement}}
+            <span class='text-danger'> - this could improve your performance by {{ improvement }}%.</span>{{/improvement}}
+    </td>
+    <td>
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-xs btn-yes btn-toggle btn-success">
+                <input type="checkbox" name="action-agree-{{index}}" value="yes" autocomplete="off">
+                <span class="fa fa-thumbs-up"></span>
+            </label>
+            <label class="btn btn-xs btn-no btn-toggle btn-danger">
+                <input type="checkbox" name="action-agree-{{lastIndex}}" value="no" autocomplete="off">
+                <span class="fa fa-thumbs-down"></span>
+            </label>
+        </div>
+    </td>
+    <td>{{>chk}}</td>
+</tr>

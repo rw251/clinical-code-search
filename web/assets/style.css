@@ -1,0 +1,14 @@
+.page {
+    display:none;
+}
+
+ul.fancytree-container {
+    height: 500px;
+    overflow: auto;
+    position: relative;
+}
+
+span.fixed-width-span {
+    float: left;
+    width: 50px;
+}
