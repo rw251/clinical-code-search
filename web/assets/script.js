@@ -57,6 +57,32 @@
                     data: {selected: data.node.selected}
                 };
             },
+            beforeActivate: function(event, data){
+                data.node.setSelected(!data.node.selected); //Select node with click
+                return false; //prevent highlighting of rows
+            },
+            //Attempt to allow single click on row to select AND double click to still expand
+            /*beforeActivate: function(event, data){
+                console.log("beforeActivate:",event,data);
+
+                if(data.node.children || data.node.lazy) {
+                    setTimeout(function () {
+                        if (local.prev) {
+                            local.prev = false;
+                            return false;
+                        }
+                        if (!local.dbl) data.node.setSelected(!data.node.selected);
+                        else local.prev = true;
+                        local.dbl = false;
+                    }, 150);
+                } else {
+                    data.node.setSelected(!data.node.selected);
+                }
+                return false;
+            },
+            dblclick: function(event, data){
+                local.dbl=true;
+            },*/
             /*select: function(event, data) {
                 var node = data.node;
 

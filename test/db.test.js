@@ -65,4 +65,18 @@ describe('DB', function() {
             donec();
         });
     });
+
+    it('13D.. does not include 13d* in it\'s children', function (donec) {
+        db.getChildren('13D..', function(rows){
+            var codes = rows.map(function(val){
+                return val.code;
+            });
+            assert.equal(9, rows.length);
+            assert.notInclude(codes, '13d..');
+            assert.notInclude(codes, '13dT.');
+            assert.notInclude(codes, '13dh.');
+            assert.notInclude(codes, '13d1.');
+            donec();
+        });
+    });
 });

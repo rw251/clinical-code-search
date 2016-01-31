@@ -8,7 +8,49 @@ ul.fancytree-container {
     position: relative;
 }
 
-span.fixed-width-span {
+/* Line up the rubrics in the tree view up to a maximum depth of 5
+ *
+ */
+ul span.fixed-width-span {
     float: left;
-    width: 50px;
+    width: 116px;
+}
+
+ul ul span.fixed-width-span {
+    float: left;
+    width: 100px;
+}
+
+ul ul ul span.fixed-width-span {
+    float: left;
+    width: 84px;
+}
+
+ul ul ul ul span.fixed-width-span {
+    float: left;
+    width: 68px;
+}
+
+ul ul ul ul ul span.fixed-width-span {
+    float: left;
+    width: 52px;
+}
+
+/* Remove border as looks a little clunky */
+span.fancytree-active span.fancytree-title,
+span.fancytree-focused span.fancytree-title {
+    border: 0;
+}
+
+.fancytree-container span.fancytree-selected span.fancytree-title{
+    border: 1px #f7f7f7 solid;
+}
+
+.fancytree-container.fancytree-treefocus span.fancytree-selected span.fancytree-title{
+    border: 1px #cbe8f6 solid;
+}
+
+.fancytree-container span.fancytree-node:hover span.fancytree-title {
+    background-color: #eff9fe;
+    border: 1px #70c0e7 solid;
 }

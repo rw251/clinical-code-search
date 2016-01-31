@@ -303,6 +303,7 @@ var getChildren = function(code, done){
     var qcode = code.replace('.','_');
     var query = "SELECT code, rubric, children FROM PreferredTerm WHERE code like '" + qcode + "' and code != '" + code + "'";
 
+    db.run("PRAGMA case_sensitive_like=ON");
     db.all(query, function (err, rows) {
         console.log(query);
         if (err) {
